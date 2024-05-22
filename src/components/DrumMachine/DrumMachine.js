@@ -3,10 +3,12 @@ import React from 'react';
 import useSound from 'use-sound';
 
 import styles from './DrumMachine.module.css';
+import { SoundToggleContext } from '../../context/SoundToggleProvider';
 
 const SOUND_SRC = '/909-drums.mp3';
 
 function DrumMachine() {
+  const { isSoundEnabled } = React.useContext(SoundToggleContext);
   const [play] = useSound(SOUND_SRC, {
     sprite: {
       kick: [0, 350],
@@ -14,31 +16,15 @@ function DrumMachine() {
       snare: [666, 290],
       cowbell: [968, 200],
     },
-    soundEnabled: true,
+    soundEnabled: isSoundEnabled,
   });
 
   return (
     <div className={styles.wrapper}>
-      <button
-        onClick={() => play({ id: 'kick' })}
-      >
-        Kick
-      </button>
-      <button
-        onClick={() => play({ id: 'hihat' })}
-      >
-        Hat
-      </button>
-      <button
-        onClick={() => play({ id: 'snare' })}
-      >
-        Snare
-      </button>
-      <button
-        onClick={() => play({ id: 'cowbell' })}
-      >
-        Cowbell
-      </button>
+      <button onClick={() => play({ id: 'kick' })}>Kick</button>
+      <button onClick={() => play({ id: 'hihat' })}>Hat</button>
+      <button onClick={() => play({ id: 'snare' })}>Snare</button>
+      <button onClick={() => play({ id: 'cowbell' })}>Cowbell</button>
     </div>
   );
 }
